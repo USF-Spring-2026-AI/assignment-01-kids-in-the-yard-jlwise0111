@@ -9,32 +9,41 @@ class Person:
         self.partner = None
         self.children = []
 
-    def get_year_born(self):
-        return self.year_born
+    # def get_year_born(self):
+    #     return self.year_born
+    #
+    # def get_year_died(self):
+    #     return self.year_died
+    #
+    # def get_first_name(self):
+    #     return self.first_name
+    #
+    # def get_last_name(self):
+    #     return self.last_name
+    #
+    # def get_gender(self):
+    #     return self.gender
+    #
+    # def get_partner(self):
+    #     return self.partner
+    #
+    # def get_children(self):
+    #     return self.children
+    #
+    # def set_partner(self, partner):
+    #     self.partner = partner
+    #
+    # def set_children(self, children):
+    #     self.children = children
 
-    def get_year_died(self):
-        return self.year_died
+    def has_last_name(self):
+        return self.last_name is not None
 
-    def get_first_name(self):
-        return self.first_name
+    def has_partner(self):
+        return self.partner is not None
 
-    def get_last_name(self):
-        return self.last_name
-
-    def get_gender(self):
-        return self.gender
-
-    def get_partner(self):
-        return self.partner
-
-    def get_children(self):
-        return self.children
-
-    def set_partner(self, partner):
-        self.partner = partner
-
-    def set_children(self, children):
-        self.children = children
+    def has_children(self):
+        return self.children is not []
 
     def is_alive_in_year(self, year):
         return self.year_born <= year <= self.year_died
