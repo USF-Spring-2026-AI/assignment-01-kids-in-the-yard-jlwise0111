@@ -1,5 +1,6 @@
 import random
 import csv
+import math
 
 from src.Person import Person
 
@@ -107,28 +108,73 @@ class PersonFactory:
             partner = self.create_partner(person=person)
             person.partner = partner
 
+        if person.has_partner():
+            if person.year_born < person.partner.year_born:
+                elder_partner = person
+                elder_decade = person.decade
+            else:
+                elder_partner = person.partner
+                elder_decade = person.partner.decade
 
+            person.children = self.create_children(elder_partner, elder_decade)
+            person.partner.children = person.children
+        else:
+            person.children = self.create_children(person, person.decade)
 
         return person
 
 
     def create_partner(self, person):
         year_born = person.year_born + random.randint(-10, 10)
+        if year_born > 2120:
+            return None
+
         partner = self.create_person(year_born=year_born, is_partner=True)
 
         return partner
 
-    def determine_children_count(self, person, decade):
-        probability = self.birth_marriage_data[decade]["birth_rate"]
+    def create_children(self, person, decade):
+        rate = self.birth_marriage_data[decade]["birth_rate"]
 
-        has_children = random.random() < probability
-        # TODO
+        min_children = math.ceil(rate - 1.5)
+        min_children = max(min_children, 0)
+        max_children = math.ceil(rate + 1.5)
+
+        if not person.has_partner():
+            min_children = max(min_children - 1, 0)
+            max_children = max(max_children - 1, 0)
+
+        num_children = random.randint(min_children, max_children)
+
+        start_year = person.year_born + 25
+        end_year = person.year_born + 45
+
+        children = []
+
+        if num_children > 0:
+            spacing = (end_year - start_year) / (num_children + 1)
+
+            for i in range(num_children):
+                child_year = int(start_year + spacing * (i + 1))
+
+                if child_year > 2120:
+                    continue
+
+                if person.has_partner():
+                    child_last_name = random.choice([person.last_name, person.partner.last_name])
+                else:
+                    child_last_name = person.last_name
+
+                child = self.create_person(year_born=child_year, last_name=child_last_name)
+                children.append(child)
+
+        return children
 
 
     def generate_life_exp(self, year_born):
         base = self.life_expectancy_data[year_born]
         variation = random.randint(-10, 10)
-        return base + variation
+        return int(base + variation)
 
     def choose_gender_first_name(self, decade):
         gender_data = self.gender_probability_data[decade]

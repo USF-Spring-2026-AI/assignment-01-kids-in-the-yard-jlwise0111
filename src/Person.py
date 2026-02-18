@@ -6,35 +6,9 @@ class Person:
         self.last_name = last_name
         self.gender = gender
 
+        self.decade = str((self.year_born // 10) * 10) + "s"
         self.partner = None
         self.children = []
-
-    # def get_year_born(self):
-    #     return self.year_born
-    #
-    # def get_year_died(self):
-    #     return self.year_died
-    #
-    # def get_first_name(self):
-    #     return self.first_name
-    #
-    # def get_last_name(self):
-    #     return self.last_name
-    #
-    # def get_gender(self):
-    #     return self.gender
-    #
-    # def get_partner(self):
-    #     return self.partner
-    #
-    # def get_children(self):
-    #     return self.children
-    #
-    # def set_partner(self, partner):
-    #     self.partner = partner
-    #
-    # def set_children(self, children):
-    #     self.children = children
 
     def has_last_name(self):
         return self.last_name is not None
@@ -43,10 +17,10 @@ class Person:
         return self.partner is not None
 
     def has_children(self):
-        return self.children is not []
+        return len(self.children) > 0
 
-    def is_alive_in_year(self, year):
-        return self.year_born <= year <= self.year_died
+    def is_alive_in_decade(self, decade):
+        return (self.year_born <= decade + 9) and (decade <= self.year_died)
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
