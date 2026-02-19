@@ -1,4 +1,6 @@
 class Person:
+    """Represents an individual in the family tree."""
+
     def __init__(self, year_born, year_died, first_name, last_name, gender):
         self.year_born = year_born
         self.year_died = year_died
@@ -9,9 +11,6 @@ class Person:
         self.decade = str((self.year_born // 10) * 10) + "s"
         self.partner = None
         self.children = []
-
-    def has_last_name(self):
-        return self.last_name is not None
 
     def has_partner(self):
         return self.partner is not None

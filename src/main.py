@@ -2,8 +2,9 @@ from src.FamilyTree import FamilyTree
 from src.PersonFactory import PersonFactory
 
 
-
 def menu(tree):
+    """Display menu options and handle user input."""
+
     response = input("""Are you interested in:
 (T)otal number of people in the tree
 Total number of people in the tree by (D)ecade
@@ -28,6 +29,7 @@ Total number of people in the tree by (D)ecade
         print("Invalid input: " + response)
 
     menu(tree)
+
 
 if __name__ == '__main__':
     factory = PersonFactory("C:\\Users\\jlwis\\PycharmProjects\\assignment-01-kids-in-the-yard-jlwise0111\\data\\")

@@ -2,6 +2,8 @@ from src.Person import Person
 
 
 class FamilyTree:
+    """Represents the generated family tree and reporting utilities."""
+
     def __init__(self, factory):
         print("Reading files...")
         self.factory = factory
@@ -11,6 +13,8 @@ class FamilyTree:
         self._create_family_tree()
 
     def _create_family_tree(self):
+        """Initialize the tree with the first couple born in 1950."""
+
         year_born = 1950
         decade = '1950s'
         life_exp_1 = self.factory.generate_life_exp(year_born)
@@ -44,6 +48,8 @@ class FamilyTree:
         person_1.children = person_2.children = children
 
     def _collect_all_people(self):
+        """Traverse the family graph and return all unique people."""
+
         visited = set()
         people = []
 
@@ -66,9 +72,13 @@ class FamilyTree:
         return people
 
     def total_people(self):
+        """Return total number of people in the tree."""
+
         return len(self._collect_all_people())
 
     def total_people_by_decade(self):
+        """Return count of living people per decade."""
+
         people = self._collect_all_people()
 
         people_by_decade = {}
@@ -78,6 +88,8 @@ class FamilyTree:
         return people_by_decade
 
     def duplicate_names(self):
+        """Return set of duplicated full names."""
+
         people = self._collect_all_people()
 
         result = set()
@@ -91,6 +103,8 @@ class FamilyTree:
         return result
 
     def _pretty_print(self, person, indent="", is_last=True, visited=None):
+        """Recursively print tree structure."""
+
         if visited is None:
             visited = set()
 
@@ -111,4 +125,6 @@ class FamilyTree:
                 self._pretty_print(child, new_indent, last_child, visited)
 
     def pretty_print(self):
+        """Print the family tree starting from the first root."""
+
         self._pretty_print(self.roots[0])
